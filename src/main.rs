@@ -1,4 +1,6 @@
 use std::io;
+use std::collections::HashMap;
+use rand::Rng;
 fn main() {
     let mut user1 = User {
         email: String::from("1@gmail.com"),
@@ -32,6 +34,30 @@ fn main() {
     println!("Can rect1 hold rect2?{}", rect1.can_hold(&rect2));
     println!("Can rect1 hold rect2?{}", rect1.can_hold(&rect3));
     
+    let four = IpAddKind::V4(String::from("sdfsdf"));
+    let six = IpAddKind::V6;
+    four.call();
+    value_in_cents(Coin::Quarter(UsState::Alaska));
+
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
+
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        other => move_player(other)
+
+    }
+
+    let config_max = Some(3u8);
+    if let Some(max) = config_max {
+        println!("{}",max);
+    }
+
+    let secrete_number = rand::thread_rng().gen_range(1..101);
+
 }
 
 // fn samples(){
@@ -193,3 +219,60 @@ impl Rect {
         self.width > other.width && self.height > other.height
     }
 }
+
+#[derive(Debug)]
+enum IpAddKind {
+    V4(String),
+    V6(String)
+}
+
+impl IpAddKind {
+    fn call(&self) {
+        println!("testing enum");
+    }
+}
+
+#[derive(Debug)]
+enum  UsState {
+    Alambama,
+    Alaska,
+}
+
+enum Coin {
+    Peny,
+    Nickel,
+    Dime,
+    Quarter(UsState)
+}
+
+fn value_in_cents(coin: Coin) -> u8  {
+    match coin {
+        Coin::Peny => {
+            println!("Lucky penny!");
+            return 1;
+        },
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            println!("State quater from {:?}!", state);
+            return 25
+        },
+    }
+}
+
+fn plus_one(x:Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i+1),
+    }
+}
+
+fn add_fancy_hat() {
+
+}
+
+fn remove_fancy_hat() {
+
+}
+
+fn move_player (num_space : u8) {}
