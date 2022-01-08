@@ -1,6 +1,15 @@
 use std::io;
 use std::collections::HashMap;
 use rand::Rng;
+use std::fs::File;
+use std::io::ErrorKind;
+
+mod models;
+mod traits;
+use models::new_article::NewArticle;
+use models::tweet::Tweet;
+use traits::summary::Summary;
+
 fn main() {
     let mut user1 = User {
         email: String::from("1@gmail.com"),
@@ -57,8 +66,98 @@ fn main() {
     }
 
     let secrete_number = rand::thread_rng().gen_range(1..101);
+    let mut v: Vec<i32> = Vec::new();
+    v.push(5);
+    v.push(6);
+    v.push(7);
+    v.push(8);
+    
+    let third: &i32 = &v[2];
+    println!("The third element is {}",third);
+    
+    let data = "initial contents";
+    let s = data.to_string();
+
+    let s1 = String::from("Hello,");
+    let s2 = String::from("world!");
+    let s3 = String::from("dkdkd");
+
+
+    let ss = format!("{}-{}-{}",s1,s2,s3);
+    println!("{}",&ss[0..1]);
+
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+
+    let team_name = String::from("Blue");
+    let score = scores.get(&team_name);
+    println!("{:?}",scores);
+
+    let text = "hello world wonderful world";
+
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("{:?}", map);
+
+    let tweet = Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        retweet: false,
+    };
+
+
+    //let f = File::open("hello.txt");
+
+    // let f = File::open("hello.txt");
+
+    // let f = match f {
+    //     Ok(file) => file,
+    //     Err(error) => match error.kind() {
+    //         ErrorKind::NotFound => match File::create("hello.txt") {
+    //             Ok(fc) => fc,
+    //             Err(e) => panic!("Problem creating the file: {:?}", e),
+    //         },
+    //         other_error => {
+    //             panic!("Problem opening the file: {:?}", other_error)
+    //         }
+    //     },
+    // };
+    
+    // let number_list = vec![34, 50, 25, 100, 65];
+
+    // let result = largest(&number_list);
+    // println!("The largest number is {}", result);
+
+    // let char_list = vec!['y', 'm', 'a', 'q'];
+
+    //let result = largest(&char_list);
+    //println!("The largest char is {}", result);
+
+
 
 }
+
+// fn largest<T>(list: &[T]) -> T {
+//     let mut largest = list[0];
+
+//     for &item in list {
+//         if item > largest {
+//             largest = item;
+//         }
+//     }
+//     return largest;
+// }
+
+
 
 // fn samples(){
 // let mut x = 5;
@@ -172,6 +271,10 @@ fn main() {
 // fn make_copy(some_integer: i32){
 //     println!("{}",some_integer);
 // }
+
+pub fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.summarize())
+}
 
 fn first_word(s: &String) -> &str {
     let bytes = s.as_bytes();
