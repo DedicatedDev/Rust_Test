@@ -6,9 +6,11 @@ use std::io::ErrorKind;
 
 mod models;
 mod traits;
+
 use models::new_article::NewArticle;
 use models::tweet::Tweet;
 use traits::summary::Summary;
+
 
 fn main() {
     let mut user1 = User {
